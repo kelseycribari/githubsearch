@@ -4,11 +4,11 @@ import {
   Box
 } from 'grommet';
 
-const User = (props) => {
+const Repositories = (props) => {
 
     //grab the user's name from the path by removing all leading and trailing slashes
     const [pathName] = useState(window.location.pathname.replace(/\//g,''));  
-    const [users, setUsers] = useState(''); 
+    const [repos, setRepos] = useState(''); 
 
     //initialize the Octokit variable and set the authentication to the token located in .env.local
     const octokit = new Octokit({
@@ -16,20 +16,21 @@ const User = (props) => {
       })
 
     useEffect(() => {
-        async function getUsers() {
-          //makes the get request to grab the user based on the username given in the path
-          await octokit.request('GET /users/{username}', {
+        async function getRepos() {
+          //makes the get request to grab the user's repos based on the username given in the path
+          await octokit.request('GET /users/{username}/repos', {
             username:  pathName,
             headers: {
               'X-GitHub-Api-Version': '2022-11-28'
             }
           }).then((response) => {
+            console.log("Inside repositories");
             console.log(response); 
             console.log(pathName);
-            setUsers(response.data);
+            setRepos(response.data);
           });
         }
-        getUsers();
+        getRepos();
       });
 
       return (
@@ -37,4 +38,4 @@ const User = (props) => {
       );
 }
 
-export default User;
+export default Repositories;
