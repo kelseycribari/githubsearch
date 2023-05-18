@@ -31,10 +31,12 @@ const Repositories = (props) => {
           });
         }
         getRepos();
-      });
+      },[]);
 
       return (
-        <Box></Box>
+        <Box>
+            
+        </Box>
       );
 }
 

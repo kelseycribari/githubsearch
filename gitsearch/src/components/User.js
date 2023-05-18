@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react"; 
 import { Octokit } from "https://cdn.skypack.dev/octokit";
+import {Github} from 'grommet-icons'; 
 import {
-  Box
+    Avatar,
+    Box,
+    Button,
+    Header,
+    Text
 } from 'grommet';
 
 const User = (props) => {
@@ -30,10 +35,16 @@ const User = (props) => {
           });
         }
         getUsers();
-      });
+      },[]);
 
       return (
-        <Box></Box>
+            <Box pad='medium' fill="horizontal">
+                <Header background="neutral-3" round="large" sticky="scrollUp">
+                <Avatar src={users.avatar_url} />
+                <Text>{users.login}</Text>
+                    <Button icon={<Github />} hoverIndicator />
+                </Header>
+            </Box>
       );
 }
 
