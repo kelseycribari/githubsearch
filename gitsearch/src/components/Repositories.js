@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from "react"; 
-import { Octokit } from "https://cdn.skypack.dev/octokit";
+import React, { useState, useEffect, useContext } from "react";
+import { Octokit } from  "@octokit/rest"; 
+import { RepositoryCard } from '../utils/RepositoryCard';
 import {
-  Box
+  Box,
+  Grid,
+  ResponsiveContext,
+  Text
 } from 'grommet';
 
 const Repositories = (props) => {
 
     //grab the user's name from the path by removing all leading and trailing slashes
     const [pathName] = useState(window.location.pathname.replace(/\//g,''));  
-    const [repos, setRepos] = useState(''); 
+    const [repos, setRepos] = useState([]); 
+    const size = useContext(ResponsiveContext); 
 
     //initialize the Octokit variable and set the authentication to the token located in .env.local
     const octokit = new Octokit({
@@ -28,6 +33,9 @@ const Repositories = (props) => {
             console.log(response); 
             console.log(pathName);
             setRepos(response.data);
+          }).catch(error => {
+            console.log("No repositories found for that user. Please enter a valid user."); 
+            setRepos([]);
           });
         }
         getRepos();
@@ -35,7 +43,12 @@ const Repositories = (props) => {
 
       return (
         <Box>
-            
+            <Grid columns={!['xsmall','small'].includes(size) ? 'medium' : '100%'} 
+            rows={[['small', 'small']]} gap='medium' fill>
+                {repos.map(r => (
+                    <RepositoryCard repo={r} key={r.name}/>
+                ))}
+            </Grid> 
         </Box>
       );
 }

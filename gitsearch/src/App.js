@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <Grommet full={true}>
     
-        <Page style={{height:"100%"}}>
+        <Page overflow='auto' >
           <User></User>
           <Repositories/>
         </Page>

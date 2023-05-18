@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react"; 
-import { Octokit } from "https://cdn.skypack.dev/octokit";
+import { Octokit } from  "@octokit/rest";
+
+//import { Octokit } from "https://cdn.skypack.dev/octokit";
 import {Github} from 'grommet-icons'; 
 import {
     Avatar,
     Box,
     Button,
     Header,
+    Grid,
     Text
 } from 'grommet';
 
@@ -32,19 +35,22 @@ const User = (props) => {
             console.log(response); 
             console.log(pathName);
             setUsers(response.data);
-          });
+          }).catch(error => { 
+            console.log("No users found at that path. Please enter a valid path and try again.");
+            setUsers([]);
+        });
         }
         getUsers();
       },[]);
 
       return (
-            <Box pad='medium' fill="horizontal">
-                <Header background="neutral-3" round="large" sticky="scrollUp">
-                <Avatar src={users.avatar_url} />
-                <Text>{users.login}</Text>
+            <Header fill="horizontal" background='dark-1'>
+                
+                <Avatar size='large' src={users.avatar_url} />
+                <Text size='xlarge'>{users.login}</Text>
                     <Button icon={<Github />} hoverIndicator />
-                </Header>
-            </Box>
+
+            </Header>
       );
 }
 
