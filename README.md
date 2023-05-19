@@ -3,8 +3,8 @@ A simple React application that lists the repositories for a given GitHub user.
 
 In order to run:
 
-1. Clone this repository into your local environment. 
-2. Add a .env file at the top level of the project. 
+1. Clone this repository into your local environment and change directories into gitsearch. 
+2. Add a .env file at the top level of the project (under gitsearch). 
 3. Inside the .env file add a variable called **REACT_APP_GH='your-github-token'** and place in your personal github token into the quotes
 4. Run **npm install** from your terminal window to install the necessary dependencies. 
 5. Run **npm start** from your terminal window to start the application. 
