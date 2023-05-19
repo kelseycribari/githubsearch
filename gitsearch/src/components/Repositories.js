@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect} from "react";
 import { Octokit } from  "@octokit/rest"; 
 import { RepositoryCard } from '../utils/RepositoryCard';
+import { LoadMore } from "../utils/LoadMore";
 import {
   Box,
-  Grid,
-  ResponsiveContext,
-  Text
+  Grid
 } from 'grommet';
 
 const Repositories = (props) => {
@@ -13,7 +12,12 @@ const Repositories = (props) => {
     //grab the user's name from the path by removing all leading and trailing slashes
     const [pathName] = useState(window.location.pathname.replace(/\//g,''));  
     const [repos, setRepos] = useState([]); 
-    const size = useContext(ResponsiveContext); 
+    const [headers, setHeaders] = useState([]);
+
+
+    const setAdditionalRepos = (additionalRepos) => {
+        setRepos([...repos, ...additionalRepos]);
+    }
 
     //initialize the Octokit variable and set the authentication to the token located in .env.local
     const octokit = new Octokit({
@@ -29,10 +33,8 @@ const Repositories = (props) => {
               'X-GitHub-Api-Version': '2022-11-28'
             }
           }).then((response) => {
-            console.log("Inside repositories");
-            console.log(response); 
-            console.log(pathName);
             setRepos(response.data);
+            setHeaders(response.headers); 
           }).catch(error => {
             console.log("No repositories found for that user. Please enter a valid user."); 
             setRepos([]);
@@ -43,14 +45,15 @@ const Repositories = (props) => {
 
       return (
         <Box>
-            <Grid columns={!['xsmall','small'].includes(size) ? 'medium' : '100%'} 
-            rows={[['small', 'small']]} gap='medium' fill>
+            <Grid columns={['flex','flex','flex']} 
+            rows={[['flex', 'flex','flex']]} gap='medium' fill>
                 {repos.map(r => (
                     <RepositoryCard repo={r} key={r.name}/>
                 ))}
             </Grid> 
+            <LoadMore queryLink={headers.link ? headers.link : ""} setAdditionalRepos={setAdditionalRepos} setHeaders={setHeaders}></LoadMore>
         </Box>
-      );
+      )
 }
 
 export default Repositories;

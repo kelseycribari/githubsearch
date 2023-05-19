@@ -1,10 +1,12 @@
 import React from "react";
-import { Star } from 'grommet-icons';
+import { Star, Github } from 'grommet-icons';
 import {
   Box,
   Card,
   CardBody,
   CardHeader,
+  CardFooter,
+  Anchor,
   Text
 } from 'grommet';
 
@@ -15,15 +17,18 @@ export const RepositoryCard = (props) => {
       return (
         <Card background='background' margin="medium">
           <CardBody gap="small" align="start" flex="grow">
-            <CardHeader pad="small"justify='evenly' level={3}>
-              <Text>{repo.name}</Text>
+            <CardHeader pad="small"justify='evenly' level={2}>
+              <Text color='text-strong'>{repo.name}</Text>
+              <Anchor alignSelf="end" label={<Github color="brand"/>} href={repo.html_url}></Anchor>
             </CardHeader>
             <Box pad="small">
-            <Text size="medium">{repo.description ? repo.description : "No description provided"}</Text>
-            <Text size='small'>{repo.stargazers_count}<Star size='small'/></Text>
-            
-            <Text size="xsmall">{repo.language ? repo.language : "No identified language"}</Text>
+            <Text margin={{vertical:'medium'}} size="medium">{repo.description ? repo.description : "No description provided"}</Text>
+            <Text size='medium'>{repo.stargazers_count}<Star color="brand"size='small'/></Text>
+            <Text size="small">{repo.language ? repo.language : "No identified language"}</Text>
             </Box>
+            <CardFooter alignSelf='baseline'pad="small" >
+               
+            </CardFooter>
             
             
           </CardBody>
