@@ -18,7 +18,7 @@ export const RepositoryCard = (props) => {
         <Card background='background' margin="medium">
           <CardBody gap="small" align="start" flex="grow">
             <CardHeader pad="small"justify='evenly' level={2}>
-              <Text color='text-strong'>{repo.name}</Text>
+              <Text color='text-strong' data-testid={'reponame-' + repo.name}>{repo.name}</Text>
               <Anchor alignSelf="end" label={<Github color="brand"/>} href={repo.html_url}></Anchor>
             </CardHeader>
             <Box pad="small">

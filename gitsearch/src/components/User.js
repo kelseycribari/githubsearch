@@ -40,7 +40,7 @@ const User = (props) => {
       return (
             <Header fill="horizontal" background='dark-1'>
                 <Avatar size='large' src={users.avatar_url} />
-                <Text size='xlarge'>{users.login}</Text>
+                <Text size='xlarge' data-testid="username">{users.login}</Text>
                 <Anchor icon={<Github size="large" color="white"/>} href={users.html_url} />
             </Header>
       );
