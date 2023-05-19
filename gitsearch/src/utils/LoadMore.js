@@ -12,13 +12,24 @@ export const LoadMore = (props) => {
         auth: process.env.REACT_APP_GH
       })
 
+      // uses a regex to pull the url that is located in from of rel="next"
+      // in the queryLink string. Returns null if no match found (which is okay since button will already be disabled)
+      const getNextUrl = () => {
+        const regex = /<([^>]+)>;\s*rel="next"/;
+        const match = regex.exec(queryLink);
+        if (match && match.length >= 2) {
+            return match[1];
+        }
+        return null; // Return null if no match found
+      }
+
      const queryForMoreResults = async () => {
         // check if there is even a next page of results. only make the load more request if there is, 
         if (buttonEnabled) {
-            // parse the link to pull out the first URL which is the next URL
-            const regex = /<([^>]*)>/;
-            const match = queryLink.match(regex);
-            var firstUrl = match ? match[1] : null;
+            console.log(queryLink); 
+            const firstUrl = getNextUrl(); 
+            console.log(firstUrl); 
+            // makes a call to get the next page of results that has been parsed from the link header
             await octokit.request(firstUrl, {
                 headers: {
                 'X-GitHub-Api-Version': '2022-11-28'
@@ -36,6 +47,7 @@ export const LoadMore = (props) => {
 
     useEffect(() => {
         // only enable the load more results button if there is a next page available
+        console.log(props.queryLink.includes("next"));
         setButtonEnabled(props.queryLink.includes("next"));
     }, [props.queryLink]);
 
