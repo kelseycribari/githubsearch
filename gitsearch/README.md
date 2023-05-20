@@ -1,3 +1,5 @@
+DEPENDENCY: This project was created using Node version 18.16.0 (LTS). If any issues arrive with download, try upgrading to this version.
+
 In order to run:
 
 1. Clone this repository into your local environment and change directories into gitsearch.
@@ -17,7 +19,6 @@ In order to run the cypress tests:
 5. Select the **Chrome Browser**, then click **Start E2E Testing in Chrome**.
 6. Wait for the Chrome window to open, then select the name of the test file (spec.cy.js)
 7. Once there the tests should run automatically with a visual view of what they are doing.
-
 
 # Getting Started with Create React App
 
