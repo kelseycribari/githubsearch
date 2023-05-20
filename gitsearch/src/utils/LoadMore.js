@@ -25,9 +25,7 @@ export const LoadMore = (props) => {
   const queryForMoreResults = async () => {
     // check if there is even a next page of results. only make the load more request if there is,
     if (buttonEnabled) {
-      console.log(queryLink);
       const firstUrl = getNextUrl();
-      console.log(firstUrl);
       // makes a call to get the next page of results that has been parsed from the link header
       await octokit
         .request(firstUrl, {
@@ -50,7 +48,6 @@ export const LoadMore = (props) => {
 
   useEffect(() => {
     // only enable the load more results button if there is a next page available
-    console.log(props.queryLink.includes("next"));
     setButtonEnabled(props.queryLink.includes("next"));
   }, [props.queryLink]);
 
